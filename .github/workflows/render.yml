@@ -36,23 +36,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Calculate frames
-        id: calc
-        run: |
-          DURATION=${{ github.event.inputs.duration_seconds }}
-          FRAMES=$((DURATION * 30))
-          echo "frames=$FRAMES" >> $GITHUB_OUTPUT
-
       - name: Render video
         run: |
-          mkdir -p out
           npx remotion render \
             ${{ github.event.inputs.composition_id }} \
-            out/output.mp4
+            out/${{ github.event.inputs.output_name }}.mp4
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.inputs.output_name }}
-          path: out/output.mp4
+          path: out/${{ github.event.inputs.output_name }}.mp4
           retention-days: 7
