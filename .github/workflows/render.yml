@@ -1,0 +1,59 @@
+name: Render Video
+
+on:
+  workflow_dispatch:
+    inputs:
+      composition_id:
+        description: 'Composition ID to render'
+        required: true
+        default: 'AdwaDemo'
+        type: string
+      duration_seconds:
+        description: 'Duration in seconds'
+        required: false
+        default: '30'
+        type: string
+      output_name:
+        description: 'Output filename (without .mp4)'
+        required: false
+        default: 'adwa-output'
+        type: string
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Calculate frames
+        id: calc
+        run: |
+          DURATION=${{ github.event.inputs.duration_seconds }}
+          FRAMES=$((DURATION * 30))
+          echo "frames=$FRAMES" >> $GITHUB_OUTPUT
+
+      - name: Render video
+        run: |
+          npx remotion render \
+            ${{ github.event.inputs.composition_id }} \
+            out/${{ github.event.inputs.output_name }}.mp4 \
+            --frames=${{ steps.calc.outputs.frames }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.output_name }}
+          path: out/${{ github.event.inputs.output_name }}.mp4
+          retention-days: 7

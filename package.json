@@ -1,0 +1,19 @@
+{
+  "name": "adwa-remotion",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx remotion studio",
+    "build": "npx remotion render AdwaDemo out/adwa-demo.mp4"
+  },
+  "dependencies": {
+    "@remotion/bundler": "^4.0.460",
+    "@remotion/cli": "^4",
+    "@remotion/player": "^4",
+    "@remotion/renderer": "^4.0.460",
+    "puppeteer": "^24.43.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "remotion": "^4"
+  }
+}
