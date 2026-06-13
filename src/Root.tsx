@@ -1,6 +1,5 @@
 import React from "react";
 import { Composition } from "remotion";
-import { registerRoot } from "remotion";
 import { AdwaDemo } from "./AdwaDemo";
 import { TobiaPromo } from "./TobiaPromo";
 import { EthiopiaDemo } from "./EthiopiaDemo";
@@ -35,5 +34,3 @@ export const Root: React.FC = () => {
     </>
   );
 };
-
-registerRoot(Root);
