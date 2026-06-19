@@ -8,33 +8,27 @@ import {
 const SceneWho: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const titleScale = spring({ frame, fps, config: { damping: 8, mass: 0.5 }, from: 0.3, to: 1 });
   const subtitleY = spring({ frame, fps, config: { damping: 15 }, delay: 20, from: 30, to: 0 });
   const subtitleOpacity = spring({ frame, fps, config: { damping: 20 }, delay: 25 });
 
   return (
-    <AbsoluteFill style={{ background: "linear-gradient(180deg, #0a0a1a 0%, #0d1025 100%)" }}>
-      <ParticleField seed={777} color="#ffaa00" />
-      <CinematicBars opacity={0.5} />
-      <div style={{
-        position: "absolute", top: "25%", width: "100%",
-        display: "flex", flexDirection: "column", alignItems: "center", gap: 20,
-      }}>
-        <NeonText text="MESSAY" size={80} color="#ffaa00" delay={10} />
-        <div style={{ transform: `translateY(${subtitleY}px)`, opacity: subtitleOpacity }}>
-          <NeonText text="TIGISTU" size={36} color="#ffcc44" delay={30} />
-        </div>
+    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", gap: 20 }}>
+      <div
+        style={{
+          transform: `scale(${titleScale})`,
+          textAlign: "center",
+        }}
+      >
+        <NeonText text="MESSAY TIGISTU" size={72} color="#ffaa00" />
       </div>
-      <div style={{
-        position: "absolute", top: "62%", width: "100%",
-        display: "flex", justifyContent: "center", opacity: subtitleOpacity,
-      }}>
-        <GlassCard delay={35} width="50%">
-          <div style={{ padding: 20, textAlign: "center" }}>
-            <ScrambleText
-              text="aka THE ARCHITECT"
-              size={22} color="#ffffff" delay={40} speed={3} />
-          </div>
-        </GlassCard>
+      <div
+        style={{
+          transform: `translateY(${subtitleY}px)`,
+          opacity: subtitleOpacity,
+        }}
+      >
+        <NeonText text="AKA THE ARCHITECT" size={36} color="#ff6644" delay={15} />
       </div>
     </AbsoluteFill>
   );
@@ -53,18 +47,9 @@ const SceneBuilder: React.FC = () => {
   ];
 
   return (
-    <AbsoluteFill style={{ background: "linear-gradient(180deg, #0d1025 0%, #0a0a1a 100%)" }}>
-      <ParticleField seed={42} color="#00ff88" />
-      <CinematicBars opacity={0.4} />
-      <div style={{
-        position: "absolute", top: "12%", width: "100%", textAlign: "center",
-      }}>
-        <NeonText text="HE BUILT" size={52} color="#ffffff" delay={10} />
-      </div>
-      <div style={{
-        position: "absolute", top: "32%", width: "100%",
-        display: "flex", flexDirection: "column", alignItems: "center", gap: 14,
-      }}>
+    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", gap: 30 }}>
+      <NeonText text="HE BUILT" size={56} color="#ffffff" />
+      <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "60%" }}>
         {builds.map((b, i) => {
           const cardX = spring({
             frame: Math.max(0, frame - 30 - i * 12),
@@ -79,22 +64,19 @@ const SceneBuilder: React.FC = () => {
             config: { damping: 16 },
           });
           return (
-            <div key={b.name} style={{
-              transform: `translateX(${cardX}px)`,
-              opacity: cardOpacity,
-              display: "flex", gap: 20, alignItems: "center",
-              background: "rgba(255,255,255,0.04)",
-              borderRadius: 12, padding: "12px 28px",
-              border: `1px solid ${b.color}33`,
-              minWidth: 420, justifyContent: "space-between",
-            }}>
-              <span style={{
-                color: b.color, fontSize: 22, fontWeight: 800,
-                fontFamily: "monospace", letterSpacing: 2,
-              }}>{b.name}</span>
-              <span style={{
-                color: "#aaa", fontSize: 16, fontFamily: "sans-serif",
-              }}>{b.desc}</span>
+            <div
+              key={b.name}
+              style={{
+                transform: `translateX(${cardX}px)`,
+                opacity: cardOpacity,
+              }}
+            >
+              <GlassCard delay={20 + i * 8} width="100%">
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 24px" }}>
+                  <span style={{ color: b.color, fontSize: 28, fontWeight: 700 }}>{b.name}</span>
+                  <span style={{ color: "#aaa", fontSize: 18 }}>{b.desc}</span>
+                </div>
+              </GlassCard>
             </div>
           );
         })}
@@ -103,63 +85,46 @@ const SceneBuilder: React.FC = () => {
   );
 };
 
-// ─── SCENE 3: The Quote ───────────────────────────────
-const SceneQuote: React.FC = () => {
+// ─── SCENE 3: The Prime Directives ────────────────────
+const SceneDirectives: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const lines = [
-    "\"MAKE IT MOVE\"",
-    "\"DON'T REPORT IT — FIX IT\"",
-    "\"DIRECT. SARCASTIC. R-RATED.\"",
+  const directives = [
+    { text: "MAKE IT MOVE", color: "#00ff88" },
+    { text: "DON'T REPORT IT — FIX IT", color: "#ff6644" },
+    { text: "DIRECT. SARCASTIC. R-RATED.", color: "#00ccff" },
   ];
 
   return (
-    <AbsoluteFill style={{ background: "linear-gradient(180deg, #0a0a1a 0%, #150a20 100%)" }}>
-      <ParticleField seed={999} color="#ff6644" />
-      <CinematicBars opacity={0.5} />
-      <div style={{
-        position: "absolute", top: "15%", width: "100%", textAlign: "center",
-      }}>
-        <NeonText text="THE PRIME" size={44} color="#ff6644" delay={10} />
-        <div style={{ marginTop: 8 }}>
-          <NeonText text="DIRECTIVES" size={28} color="#ff8866" delay={25} />
-        </div>
-      </div>
-      <div style={{
-        position: "absolute", top: "42%", width: "100%",
-        display: "flex", flexDirection: "column", alignItems: "center", gap: 22,
-      }}>
-        {lines.map((line, i) => {
+    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", gap: 30 }}>
+      <NeonText text="THE PRIME DIRECTIVES" size={48} color="#ffaa00" />
+      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        {directives.map((d, i) => {
+          const slide = spring({
+            frame: Math.max(0, frame - 40 - i * 15),
+            fps,
+            config: { damping: 14, mass: 0.5 },
+            from: -60,
+            to: 0,
+          });
           const opacity = spring({
-            frame: Math.max(0, frame - 35 - i * 18),
-            fps, config: { damping: 15 },
+            frame: Math.max(0, frame - 35 - i * 15),
+            fps,
+            config: { damping: 16 },
           });
           return (
-            <div key={i} style={{ opacity }}>
-              <ScrambleText
-                text={line}
-                size={i === 0 ? 34 : 22}
-                color={i === 0 ? "#ffffff" : "#cccccc"}
-                delay={40 + i * 18}
-                speed={2}
-              />
+            <div
+              key={d.text}
+              style={{
+                transform: `translateX(${slide}px)`,
+                opacity,
+              }}
+            >
+              <ScrambleText text={d.text} color={d.color} delay={40 + i * 12} />
             </div>
           );
         })}
-      </div>
-      <div style={{
-        position: "absolute", top: "78%", width: "100%",
-        display: "flex", justifyContent: "center",
-        opacity: spring({ frame: Math.max(0, frame - 80), fps, config: { damping: 14 } }),
-      }}>
-        <GlassCard delay={85} width="55%">
-          <div style={{ padding: 16, textAlign: "center" }}>
-            <span style={{ color: "#ffaa00", fontSize: 16, fontFamily: "monospace" }}>
-              HE SHIPS. HE DOESN'T DEBATE.
-            </span>
-          </div>
-        </GlassCard>
       </div>
     </AbsoluteFill>
   );
@@ -173,36 +138,35 @@ const SceneFuture: React.FC = () => {
   const words = ["AUTONOMOUS", "UNSTOPPABLE", "ETHIOPIAN", "PHONEMAKER"];
 
   return (
-    <AbsoluteFill style={{ background: "linear-gradient(180deg, #150a20 0%, #0a0a1a 100%)" }}>
-      <ParticleField seed={333} color="#ffaa00" />
-      <CinematicBars opacity={0.3} />
-      <div style={{
-        position: "absolute", top: "20%", width: "100%", textAlign: "center",
-      }}>
-        <NeonText text="THE FUTURE" size={50} color="#ffffff" delay={10} />
-      </div>
-      <div style={{
-        position: "absolute", top: "42%", width: "100%",
-        display: "flex", justifyContent: "center", gap: 30, flexWrap: "wrap",
-      }}>
+    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", gap: 30 }}>
+      <NeonText text="THE FUTURE" size={56} color="#ffffff" />
+      <div style={{ display: "flex", gap: 30, flexWrap: "wrap", justifyContent: "center" }}>
         {words.map((word, i) => {
           const scale = spring({
             frame: Math.max(0, frame - 45 - i * 15),
-            fps, config: { damping: 10, mass: 0.4 },
-            from: 0.3, to: 1,
+            fps,
+            config: { damping: 10, mass: 0.4 },
+            from: 0.3,
+            to: 1,
+          });
+          const opacity = spring({
+            frame: Math.max(0, frame - 40 - i * 15),
+            fps,
+            config: { damping: 12 },
           });
           return (
-            <div key={word} style={{
-              transform: `scale(${scale})`,
-              padding: "14px 24px",
-              border: "1px solid rgba(255,170,0,0.3)",
-              borderRadius: 8,
-              background: "rgba(255,170,0,0.06)",
-            }}>
-              <span style={{
-                color: "#ffaa00", fontSize: 20, fontWeight: 700,
-                fontFamily: "monospace", letterSpacing: 1,
-              }}>{word}</span>
+            <div
+              key={word}
+              style={{
+                transform: `scale(${scale})`,
+                opacity,
+              }}
+            >
+              <GlassCard width="auto">
+                <div style={{ padding: "16px 28px" }}>
+                  <span style={{ color: "#ffaa00", fontSize: 24, fontWeight: 700 }}>{word}</span>
+                </div>
+              </GlassCard>
             </div>
           );
         })}
@@ -219,45 +183,18 @@ const SceneOutro: React.FC = () => {
   const glow = interpolate(frame, [30, 50, 80], [0, 1, 0.6]);
 
   return (
-    <AbsoluteFill style={{
-      background: "radial-gradient(circle at center, #1a1000 0%, #0a0a1a 70%)",
-    }}>
-      <ParticleField seed={777} color="#ffaa00" />
-      <CinematicBars opacity={0.6} />
-      <div style={{
-        position: "absolute", top: "28%", width: "100%",
-        display: "flex", flexDirection: "column", alignItems: "center", gap: 10,
-        transform: `translateY(${punch}px)`,
-      }}>
-        <NeonText text="MESSAY" size={88} color="#ffaa00" delay={20} />
-        <div style={{ marginTop: 8 }}>
-          <NeonText text="TIGISTU" size={42} color="#ffcc44" delay={40} />
-        </div>
+    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", gap: 25 }}>
+      <div
+        style={{
+          transform: `translateX(${punch}px)`,
+          filter: `drop-shadow(0 0 ${glow * 40}px rgba(255,170,0,0.8))`,
+        }}
+      >
+        <NeonText text="THE ARCHITECT" size={80} color="#ffaa00" delay={10} />
       </div>
-      <div style={{
-        position: "absolute", top: "68%", width: "100%",
-        display: "flex", justifyContent: "center",
-        opacity: spring({ frame: Math.max(0, frame - 60), fps, config: { damping: 12 } }),
-      }}>
-        <GlassCard delay={65} width="45%">
-          <div style={{
-            padding: 20, textAlign: "center",
-            filter: `drop-shadow(0 0 ${glow * 40}px rgba(255,170,0,0.6))`,
-          }}>
-            <span style={{
-              color: "#ffaa00", fontSize: 28, fontWeight: 900,
-              fontFamily: "monospace", letterSpacing: 3,
-            }}>
-              THE ARCHITECT
-            </span>
-            <div style={{ marginTop: 12 }}>
-              <span style={{ color: "#888", fontSize: 14, fontFamily: "sans-serif" }}>
-                If it ships, he built it.
-              </span>
-            </div>
-          </div>
-        </GlassCard>
-      </div>
+      <FadeTransition inFrame={50} outFrame={110}>
+        <NeonText text="If it ships, he built it." size={32} color="#ffffff" delay={50} />
+      </FadeTransition>
     </AbsoluteFill>
   );
 };
@@ -268,26 +205,24 @@ const MessayPromo: React.FC = () => {
   const sceneDuration = 4 * fps; // 4 seconds per scene
 
   return (
-    <AbsoluteFill style={{ background: "#0a0a1a", fontFamily: "sans-serif" }}>
+    <AbsoluteFill style={{ backgroundColor: "#0a0a1a" }}>
+      <ParticleField seed={42} />
       <Sequence from={0} durationInFrames={sceneDuration}>
         <SceneWho />
-        <FadeTransition duration={15} />
       </Sequence>
       <Sequence from={sceneDuration} durationInFrames={sceneDuration}>
         <SceneBuilder />
-        <FadeTransition duration={15} />
       </Sequence>
       <Sequence from={sceneDuration * 2} durationInFrames={sceneDuration}>
-        <SceneQuote />
-        <FadeTransition duration={15} />
+        <SceneDirectives />
       </Sequence>
       <Sequence from={sceneDuration * 3} durationInFrames={sceneDuration}>
         <SceneFuture />
-        <FadeTransition duration={15} />
       </Sequence>
-      <Sequence from={sceneDuration * 4} durationInFrames={sceneDuration + fps}>
+      <Sequence from={sceneDuration * 4} durationInFrames={sceneDuration}>
         <SceneOutro />
       </Sequence>
+      <CinematicBars />
     </AbsoluteFill>
   );
 };
