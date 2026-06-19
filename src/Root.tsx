@@ -4,6 +4,7 @@ import { AdwaDemo } from "./AdwaDemo";
 import { TobiaPromo } from "./TobiaPromo";
 import { EthiopiaDemo } from "./EthiopiaDemo";
 import { AfricaPromo } from "./AfricaPromo";
+import MessayPromo from "./MessayPromo";
 
 export const Root: React.FC = () => {
   return (
@@ -36,6 +37,14 @@ export const Root: React.FC = () => {
         id="AfricaPromo"
         component={AfricaPromo}
         durationInFrames={900}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="MessayPromo"
+        component={MessayPromo}
+        durationInFrames={630}
         fps={30}
         width={1920}
         height={1080}
