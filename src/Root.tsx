@@ -6,7 +6,7 @@ import { EthiopiaDemo } from "./EthiopiaDemo";
 import { AfricaPromo } from "./AfricaPromo";
 import MessayPromo from "./MessayPromo";
 import { AddisAbaba } from "./AddisAbaba";
-import { OsacPromo } from "./OsacPromo";
+import OsacPromo from "./OsacPromo";
 
 export const Root: React.FC = () => {
   return (
