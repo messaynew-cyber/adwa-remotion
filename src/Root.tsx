@@ -1,6 +1,7 @@
 import React from "react";
 import { Composition } from "remotion";
 import { AdwaDemo } from "./AdwaDemo";
+import { AdwaApkPromo } from "./AdwaApkPromo";
 import { TobiaPromo } from "./TobiaPromo";
 import { LifePromo } from "./LifePromo";
 import { EthiopiaDemo } from "./EthiopiaDemo";
@@ -72,6 +73,14 @@ export const Root: React.FC = () => {
         id="OsacPromo"
         component={OsacPromo}
         durationInFrames={900}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="AdwaApkPromo"
+        component={AdwaApkPromo}
+        durationInFrames={960}
         fps={30}
         width={1920}
         height={1080}
