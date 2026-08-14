@@ -13,6 +13,7 @@ Most video pipelines demand a beefy machine. This one doesn't. Written and orche
 | ID | Length | Description |
 |---|---|---|
 | `AdwaDemo` | 30s | Flagman — OLED black, glass panel, spring physics |
+| `FromTheForge` | 30s | The Phonemaker manifesto — forge embers, kinetic type, FLUX plates |
 | `AdwaApkPromo` | 32s | ADWA APK promo — FLUX cinematic stills + Ken Burns camera |
 | `TobiaPromo` | 33s | 6-scene APK promo — particles, neon, glassmorphism |
 | `TobiaPhonemaker` | 24s | Single continuous kinetic flow, morphing FLUX parallax — no cuts |
